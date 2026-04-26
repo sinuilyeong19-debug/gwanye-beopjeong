@@ -11,10 +11,22 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       const forwardedHost = request.headers.get('x-forwarded-host')
-      if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
+      const base = forwardedHost ? `https://${forwardedHost}` : origin
+
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', user.id)
+          .single()
+
+        if (!profile) {
+          return NextResponse.redirect(`${base}/onboarding`)
+        }
       }
-      return NextResponse.redirect(`${origin}${next}`)
+
+      return NextResponse.redirect(`${base}${next}`)
     }
   }
 

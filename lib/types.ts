@@ -1,5 +1,13 @@
 export type VoteType = 'plaintiff' | 'defendant' | 'neutral'
 
+export type Profile = {
+  id: string
+  nickname: string
+  gender: 'male' | 'female' | 'other'
+  age: number
+  created_at: string
+}
+
 export type Case = {
   id: string
   title: string
