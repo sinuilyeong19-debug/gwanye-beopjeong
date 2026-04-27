@@ -40,3 +40,35 @@ export type VoteCounts = {
   neutral: number
   total: number
 }
+
+export type PostCategory = '자유' | '사연공유' | '판결결과' | '질문'
+
+export const POST_CATEGORIES: PostCategory[] = ['자유', '사연공유', '판결결과', '질문']
+
+export const CATEGORY_STYLE: Record<PostCategory, string> = {
+  '자유':    'bg-zinc-700/60 text-zinc-300',
+  '사연공유': 'bg-rose-900/60 text-rose-300',
+  '판결결과': 'bg-blue-900/60 text-blue-300',
+  '질문':    'bg-green-900/60 text-green-300',
+}
+
+export type Post = {
+  id: string
+  user_id: string | null
+  title: string
+  content: string
+  category: PostCategory
+  likes: number
+  comment_count: number
+  created_at: string
+  profiles: { nickname: string; level: number } | null
+}
+
+export type Comment = {
+  id: string
+  post_id: string
+  user_id: string | null
+  content: string
+  created_at: string
+  profiles: { nickname: string; level: number } | null
+}

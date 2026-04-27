@@ -67,6 +67,9 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-3">
+          <Link href="/community" className="hidden sm:block text-yellow-600 hover:text-yellow-400 text-sm transition-colors">
+            커뮤니티
+          </Link>
           <Link href="/cases/new" className="btn-gold text-xs sm:text-sm">
             + 사건 접수
           </Link>
