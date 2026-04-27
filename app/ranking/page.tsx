@@ -89,7 +89,13 @@ export default function RankingPage() {
           .select('id, title, category, likes, comment_count, created_at, profiles!user_id(nickname, level)')
           .order('likes', { ascending: false })
           .limit(10)
-        setPosts((data ?? []) as RankedPost[])
+        const normalized = (data ?? []).map((row: any) => ({
+          ...row,
+          profiles: Array.isArray(row.profiles) && row.profiles.length > 0
+            ? row.profiles[0]
+            : { nickname: '', level: 0 },
+        }))
+        setPosts(normalized as RankedPost[])
       }
 
       setLoaded(prev => new Set(prev).add(tab))
