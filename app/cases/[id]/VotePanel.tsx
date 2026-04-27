@@ -36,7 +36,6 @@ export function VotePanel({ caseId, plaintiffName, defendantName, initialCounts 
       }
     })
 
-    // Real-time vote updates
     const channel = supabase
       .channel(`votes:${caseId}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'votes', filter: `case_id=eq.${caseId}` }, () => {
@@ -64,18 +63,23 @@ export function VotePanel({ caseId, plaintiffName, defendantName, initialCounts 
     setLoading(true)
 
     const supabase = createClient()
+    const isNewVote = userVote === null
+
     if (userVote === vote) {
-      // Undo vote
       await supabase.from('votes').delete().eq('case_id', caseId).eq('user_id', userId!)
       setUserVote(null)
     } else {
-      // Upsert vote
       await supabase.from('votes').upsert(
         { case_id: caseId, user_id: userId!, vote },
         { onConflict: 'case_id,user_id' }
       )
       setUserVote(vote)
+
+      if (isNewVote) {
+        await supabase.rpc('add_vote_exp', { p_user_id: userId! })
+      }
     }
+
     await refreshCounts()
     setLoading(false)
   }

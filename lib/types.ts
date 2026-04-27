@@ -5,6 +5,9 @@ export type Profile = {
   nickname: string
   gender: 'male' | 'female' | 'other'
   age: number
+  exp: number
+  level: number
+  total_votes: number
   created_at: string
 }
 

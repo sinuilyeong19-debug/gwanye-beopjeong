@@ -4,18 +4,35 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { getLevelInfo } from '@/lib/level'
 import type { User } from '@supabase/supabase-js'
+import type { Profile } from '@/lib/types'
 
 export function Header() {
   const [user, setUser] = useState<User | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => setUser(data.user))
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      setUser(session?.user ?? null)
+
+    const loadProfile = async (uid: string) => {
+      const { data } = await supabase.from('profiles').select('*').eq('id', uid).single()
+      setProfile(data as Profile | null)
+    }
+
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+      if (data.user) loadProfile(data.user.id)
     })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      const u = session?.user ?? null
+      setUser(u)
+      if (u) loadProfile(u.id)
+      else setProfile(null)
+    })
+
     return () => subscription.unsubscribe()
   }, [])
 
@@ -31,10 +48,12 @@ export function Header() {
     const supabase = createClient()
     await supabase.auth.signOut()
     setMenuOpen(false)
+    setProfile(null)
   }
 
   const avatar = user?.user_metadata?.avatar_url
-  const name = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '배심원'
+  const displayName = profile?.nickname || user?.user_metadata?.full_name || user?.email?.split('@')[0] || '배심원'
+  const levelInfo = profile ? getLevelInfo(profile.exp) : null
 
   return (
     <header className="sticky top-0 z-50 border-b border-yellow-900/30 bg-[#0c0802]/95 backdrop-blur-md">
@@ -48,10 +67,7 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-3">
-          <Link
-            href="/cases/new"
-            className="btn-gold text-xs sm:text-sm"
-          >
+          <Link href="/cases/new" className="btn-gold text-xs sm:text-sm">
             + 사건 접수
           </Link>
 
@@ -62,19 +78,40 @@ export function Header() {
                 className="flex items-center gap-2 rounded-full border border-yellow-800/50 hover:border-yellow-600 px-3 py-1.5 transition-colors"
               >
                 {avatar ? (
-                  <Image src={avatar} alt={name} width={24} height={24} className="rounded-full" />
+                  <Image src={avatar} alt={displayName} width={24} height={24} className="rounded-full" />
                 ) : (
                   <div className="w-6 h-6 rounded-full bg-yellow-700 flex items-center justify-center text-xs font-bold text-yellow-200">
-                    {name[0]?.toUpperCase()}
+                    {displayName[0]?.toUpperCase()}
                   </div>
                 )}
-                <span className="text-yellow-400 text-sm hidden sm:block max-w-24 truncate">{name}</span>
+                <div className="hidden sm:flex items-center gap-1.5">
+                  <span className="text-yellow-400 text-sm max-w-24 truncate">{displayName}</span>
+                  {levelInfo && (
+                    <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${levelInfo.badge}`}>
+                      Lv.{profile!.level}
+                    </span>
+                  )}
+                </div>
                 <svg className="w-3 h-3 text-yellow-700" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                 </svg>
               </button>
+
               {menuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-40 court-card shadow-xl shadow-black/50 py-1">
+                <div className="absolute right-0 top-full mt-2 w-44 court-card shadow-xl shadow-black/50 py-1">
+                  {profile && (
+                    <div className="px-4 py-2 border-b border-yellow-900/30">
+                      <p className={`text-xs font-semibold ${levelInfo?.color}`}>{levelInfo?.title}</p>
+                      <p className="text-yellow-700 text-xs">{profile.exp} EXP</p>
+                    </div>
+                  )}
+                  <Link
+                    href="/profile"
+                    onClick={() => setMenuOpen(false)}
+                    className="block px-4 py-2 text-yellow-400 hover:bg-yellow-900/20 text-sm transition-colors"
+                  >
+                    마이페이지
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-yellow-400 hover:bg-yellow-900/20 text-sm transition-colors"
