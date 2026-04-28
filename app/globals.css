@@ -187,3 +187,23 @@ body::before {
   50%       { opacity: 0.5; }
 }
 .animate-pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
+
+/* ── 스플래시 스크린 ──────────────────────────────── */
+@keyframes splash-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 16px rgba(232,213,163,0.25));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(232,213,163,0.65));
+    transform: scale(1.06);
+  }
+}
+@keyframes splash-fadein {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes splash-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
