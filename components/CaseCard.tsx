@@ -39,10 +39,10 @@ export function CaseCard({ c }: { c: RawCase }) {
 
   return (
     <Link href={`/cases/${c.id}`} className="block">
-      <article className="court-card p-5 hover:border-yellow-700/60 hover:bg-[#1f1610] transition-all duration-200 group">
+      <article className="case-card-glow p-5 group cursor-pointer">
         <div className="flex items-start gap-3 mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-yellow-100 group-hover:text-yellow-300 transition-colors leading-snug line-clamp-2">
+            <h3 className="font-bold text-yellow-100/90 group-hover:text-yellow-300 transition-colors duration-300 leading-snug line-clamp-2" style={{ fontFamily: "'Noto Serif KR', serif" }}>
               {c.title}
             </h3>
             <div className="flex items-center gap-2 mt-1.5 text-sm">
