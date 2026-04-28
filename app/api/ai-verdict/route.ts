@@ -11,19 +11,23 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createServiceClient()
 
-    const { data: c, error: fetchError } = await supabase
-      .from('cases')
-      .select('*')
-      .eq('id', caseId)
-      .single()
+    const [{ data: c, error: fetchError }, { data: laws }] = await Promise.all([
+      supabase.from('cases').select('*').eq('id', caseId).single(),
+      supabase.from('laws').select('article_number, title, content, category').order('article_number'),
+    ])
 
     if (fetchError || !c) return NextResponse.json({ error: '사건을 찾을 수 없습니다' }, { status: 404 })
     if (c.ai_verdict) return NextResponse.json({ verdict: c.ai_verdict, winner: c.ai_verdict_winner })
 
+    const lawsSection = laws && laws.length > 0
+      ? `\n\n【관계법정 법전】\n다음 조항들을 판결에 적극 활용하세요:\n${laws.map(l => `제${l.article_number}조(${l.title}): ${l.content}`).join('\n')}`
+      : ''
+
     const systemPrompt = `당신은 '관계법정'의 AI 판사입니다.
 연애, 우정, 가족 등 인간관계의 분쟁을 심판합니다.
 공정하되 재치 있고, 직설적이되 배려 있게 판결합니다.
-한국어로 판결하며, 법정 용어를 적절히 섞어 권위 있게 표현합니다.`
+한국어로 판결하며, 법정 용어를 적절히 섞어 권위 있게 표현합니다.
+판결문에는 관련 법조항을 "관계법정 제X조(죄명)에 의거하여..." 형식으로 반드시 인용하세요.${lawsSection}`
 
     const userPrompt = `다음 사건을 심판해주세요.
 
@@ -43,6 +47,9 @@ ${c.defendant_statement ? `**피고 측 진술:**\n${c.defendant_statement}` : '
 **【판결 요지】**
 (1-2문장으로 핵심 판단)
 
+**【적용 법조】**
+(이 사건과 관련된 관계법정 조항을 "제X조(죄명)에 의거하여..." 형식으로 인용)
+
 **【사실 인정】**
 (원고·피고 진술에서 인정되는 사실 관계)
 
@@ -60,7 +67,7 @@ WINNER: plaintiff | defendant | neutral`
 
     const message = await anthropic.messages.create({
       model: 'claude-opus-4-7',
-      max_tokens: 1024,
+      max_tokens: 1200,
       system: [
         {
           type: 'text',

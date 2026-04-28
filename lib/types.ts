@@ -72,3 +72,24 @@ export type Comment = {
   created_at: string
   profiles: { nickname: string; level: number } | null
 }
+
+export type LawCategory = '연애' | '우정' | '가족' | '직장학교' | '소셜미디어'
+
+export const LAW_CATEGORIES: LawCategory[] = ['연애', '우정', '가족', '직장학교', '소셜미디어']
+
+export const LAW_CATEGORY_STYLE: Record<LawCategory, string> = {
+  '연애':     'bg-rose-900/60 text-rose-300',
+  '우정':     'bg-blue-900/60 text-blue-300',
+  '가족':     'bg-purple-900/60 text-purple-300',
+  '직장학교': 'bg-amber-900/60 text-amber-300',
+  '소셜미디어': 'bg-green-900/60 text-green-300',
+}
+
+export type Law = {
+  id: string
+  article_number: number
+  title: string
+  content: string
+  category: LawCategory
+  created_at: string
+}

@@ -67,6 +67,9 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-3">
+          <Link href="/laws" className="hidden sm:block text-yellow-600 hover:text-yellow-400 text-sm transition-colors">
+            📜 법전
+          </Link>
           <Link href="/ranking" className="hidden sm:block text-yellow-600 hover:text-yellow-400 text-sm transition-colors">
             🏆 랭킹
           </Link>
