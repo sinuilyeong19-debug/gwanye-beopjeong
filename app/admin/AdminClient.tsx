@@ -18,6 +18,7 @@ type Stats = {
 type AdminUser = {
   id: string
   nickname: string
+  email: string
   gender: string
   age: number
   level: number
@@ -109,12 +110,17 @@ export function AdminClient() {
     }
 
     if (t === 'users') {
-      const { data } = await sb
-        .from('profiles')
-        .select('id, nickname, gender, age, level, exp, total_votes, created_at')
-        .order('created_at', { ascending: false })
-        .limit(200)
-      setUsers((data ?? []) as AdminUser[])
+      const [{ data }, emailRes] = await Promise.all([
+        sb
+          .from('profiles')
+          .select('id, nickname, gender, age, level, exp, total_votes, created_at')
+          .order('created_at', { ascending: false })
+          .limit(200),
+        fetch('/api/admin/users').then(r => r.json()),
+      ])
+      const emailMap: Record<string, string> = emailRes ?? {}
+      const merged = (data ?? []).map((u: any) => ({ ...u, email: emailMap[u.id] ?? '' }))
+      setUsers(merged as AdminUser[])
     }
 
     if (t === 'cases') {
@@ -258,7 +264,7 @@ export function AdminClient() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-yellow-900/25">
-                    {['닉네임', '레벨', 'EXP', '투표', '성별/나이', '가입일'].map(h => (
+                    {['닉네임', '이메일', '레벨', 'EXP', '투표', '성별/나이', '가입일'].map(h => (
                       <th key={h} className="text-left text-yellow-700 text-xs font-medium px-4 py-2.5 whitespace-nowrap">
                         {h}
                       </th>
@@ -283,6 +289,9 @@ export function AdminClient() {
                             <span className="text-yellow-100 font-medium">{u.nickname}</span>
                           </div>
                         </td>
+                        <td className="px-4 py-2.5 text-yellow-700 text-xs whitespace-nowrap">
+                          {u.email || '—'}
+                        </td>
                         <td className="px-4 py-2.5">
                           <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${lv.badge}`}>
                             Lv.{u.level}
@@ -305,7 +314,7 @@ export function AdminClient() {
                   })}
                   {filteredUsers.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="px-4 py-10 text-center text-yellow-800 text-sm">
+                      <td colSpan={7} className="px-4 py-10 text-center text-yellow-800 text-sm">
                         유저가 없습니다.
                       </td>
                     </tr>
