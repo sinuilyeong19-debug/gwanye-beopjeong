@@ -122,8 +122,8 @@ export function SplashScreen() {
     document.addEventListener('click',      handleInteraction)
     document.addEventListener('touchstart', handleInteraction)
 
-    const t1 = setTimeout(() => setPhase('fading'), 2000)
-    const t2 = setTimeout(() => setPhase('done'),   2750)
+    const t1 = setTimeout(() => setPhase('fading'), 3000)
+    const t2 = setTimeout(() => setPhase('done'),   3750)
 
     return () => {
       clearTimeout(t1)
@@ -234,7 +234,7 @@ export function SplashScreen() {
         <div style={{
           height: '100%',
           background: 'linear-gradient(90deg, rgba(232,213,163,0.35), rgba(232,213,163,0.75))',
-          animation: 'splash-progress 1.9s cubic-bezier(0.4,0,0.2,1) 0.1s both',
+          animation: 'splash-progress 2.9s cubic-bezier(0.4,0,0.2,1) 0.1s both',
         }} />
       </div>
     </div>
