@@ -95,7 +95,7 @@ export default function RankingPage() {
             ? row.profiles[0]
             : { nickname: '', level: 0 },
         }))
-        setPosts(normalized as RankedPost[])
+        setPosts(normalized as unknown as RankedPost[])
       }
 
       setLoaded(prev => new Set(prev).add(tab))
