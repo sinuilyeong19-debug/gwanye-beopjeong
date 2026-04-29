@@ -59,65 +59,53 @@ export function Header() {
     <header
       className="sticky top-0 z-50 backdrop-blur-md"
       style={{
-        background: 'rgba(6,4,1,0.96)',
-        borderBottom: '1px solid rgba(201,168,76,0.2)',
-        boxShadow: '0 1px 0 rgba(201,168,76,0.06), 0 4px 20px rgba(0,0,0,0.5)',
+        background: 'rgba(0,0,0,0.92)',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
       }}
     >
-      {/* 상단 골드 라인 */}
-      <div
-        className="h-px w-full"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.5), rgba(232,213,163,0.7), rgba(201,168,76,0.5), transparent)' }}
-      />
-      <div className="max-w-4xl mx-auto px-4 h-15 flex items-center justify-between" style={{ height: '60px' }}>
+      <div className="max-w-4xl mx-auto px-4 flex items-center justify-between" style={{ height: '60px' }}>
 
         {/* 로고 */}
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
-            style={{ filter: 'drop-shadow(0 0 8px rgba(201,168,76,0.4))' }}>
+          <span className="text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
             ⚖️
           </span>
           <div>
             <span
-              className="font-black text-lg tracking-tight"
-              style={{
-                background: 'linear-gradient(135deg, #C9A84C 0%, #F0E4B8 50%, #C9A84C 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                fontFamily: "'Noto Serif KR', serif",
-              }}
+              className="font-black text-lg tracking-tight text-white"
+              style={{ fontFamily: "'Noto Serif KR', serif" }}
             >
               관계법정
             </span>
-            <span className="hidden sm:block text-[10px] tracking-widest uppercase" style={{ color: 'rgba(201,168,76,0.45)' }}>
+            <span className="hidden sm:block text-[10px] tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>
               AI Judge · Jury Verdict
             </span>
           </div>
         </Link>
 
         <nav className="flex items-center gap-2">
-          <Link href="/laws" className="hidden sm:block text-sm px-3 py-1.5 rounded-lg transition-all duration-200"
-            style={{ color: 'rgba(201,168,76,0.6)' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#E8D5A3'; (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.07)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.6)'; (e.currentTarget as HTMLElement).style.background = 'transparent' }}
-          >
-            📜 법전
-          </Link>
-          <Link href="/ranking" className="hidden sm:block text-sm px-3 py-1.5 rounded-lg transition-all duration-200"
-            style={{ color: 'rgba(201,168,76,0.6)' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#E8D5A3'; (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.07)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.6)'; (e.currentTarget as HTMLElement).style.background = 'transparent' }}
-          >
-            🏆 랭킹
-          </Link>
-          <Link href="/community" className="hidden sm:block text-sm px-3 py-1.5 rounded-lg transition-all duration-200"
-            style={{ color: 'rgba(201,168,76,0.6)' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#E8D5A3'; (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.07)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.6)'; (e.currentTarget as HTMLElement).style.background = 'transparent' }}
-          >
-            커뮤니티
-          </Link>
+          {[
+            { href: '/laws', label: '📜 법전' },
+            { href: '/ranking', label: '🏆 랭킹' },
+            { href: '/community', label: '커뮤니티' },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="hidden sm:block text-sm px-3 py-1.5 rounded-lg transition-all duration-200"
+              style={{ color: 'rgba(255,255,255,0.45)' }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.color = '#fff'
+                ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)'
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.45)'
+                ;(e.currentTarget as HTMLElement).style.background = 'transparent'
+              }}
+            >
+              {label}
+            </Link>
+          ))}
 
           <Link href="/cases/new" className="btn-gold text-xs sm:text-sm px-4 py-2">
             + 사건 접수
@@ -128,65 +116,69 @@ export function Header() {
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="flex items-center gap-2 rounded-full px-3 py-1.5 transition-all duration-200"
-                style={{
-                  border: '1px solid rgba(201,168,76,0.3)',
-                  background: 'rgba(201,168,76,0.04)',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.55)'; (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.08)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.3)'; (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.04)' }}
+                style={{ border: '1px solid rgba(255,255,255,0.18)' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.45)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.18)' }}
               >
                 {avatar ? (
-                  <Image src={avatar} alt={displayName} width={24} height={24} className="rounded-full" style={{ border: '1px solid rgba(201,168,76,0.3)' }} />
+                  <Image src={avatar} alt={displayName} width={24} height={24} className="rounded-full" />
                 ) : (
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
-                    style={{ background: 'linear-gradient(135deg, #B8902E, #E8D5A3)', color: '#1a0f00' }}>
+                  <div
+                    className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
+                    style={{ background: '#fff', color: '#000' }}
+                  >
                     {displayName[0]?.toUpperCase()}
                   </div>
                 )}
                 <div className="hidden sm:flex items-center gap-1.5">
-                  <span className="text-sm max-w-24 truncate" style={{ color: '#E8D5A3' }}>{displayName}</span>
+                  <span className="text-sm max-w-24 truncate text-white">{displayName}</span>
                   {levelInfo && (
                     <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full ${levelInfo.badge}`}>
                       Lv.{profile!.level}
                     </span>
                   )}
                 </div>
-                <svg className="w-3 h-3" style={{ color: 'rgba(201,168,76,0.5)' }} fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3" style={{ color: 'rgba(255,255,255,0.35)' }} fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                 </svg>
               </button>
 
               {menuOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 w-44 py-1 rounded-xl shadow-2xl"
+                  className="absolute right-0 top-full mt-2 w-44 py-1 rounded-xl"
                   style={{
-                    background: 'rgba(8,6,1,0.97)',
-                    border: '1px solid rgba(201,168,76,0.25)',
-                    boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.06)',
+                    background: '#0a0a0a',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.8)',
                   }}
                 >
                   {profile && (
-                    <div className="px-4 py-2.5" style={{ borderBottom: '1px solid rgba(201,168,76,0.12)' }}>
+                    <div className="px-4 py-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                       <p className={`text-xs font-semibold ${levelInfo?.color}`}>{levelInfo?.title}</p>
-                      <p className="text-xs mt-0.5" style={{ color: 'rgba(201,168,76,0.45)' }}>{profile.exp.toLocaleString()} EXP</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{profile.exp.toLocaleString()} EXP</p>
                     </div>
                   )}
-                  <Link
-                    href="/profile"
-                    onClick={() => setMenuOpen(false)}
-                    className="block px-4 py-2.5 text-sm transition-colors"
-                    style={{ color: 'rgba(232,213,163,0.75)' }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.08)'; (e.currentTarget as HTMLElement).style.color = '#E8D5A3' }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'rgba(232,213,163,0.75)' }}
-                  >
-                    마이페이지
-                  </Link>
+                  {[
+                    { label: '마이페이지', href: '/profile', onClick: () => setMenuOpen(false) },
+                  ].map(item => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={item.onClick}
+                      className="block px-4 py-2.5 text-sm transition-colors"
+                      style={{ color: 'rgba(255,255,255,0.65)' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)'; (e.currentTarget as HTMLElement).style.color = '#fff' }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)' }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2.5 text-sm transition-colors"
-                    style={{ color: 'rgba(232,213,163,0.75)' }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.08)'; (e.currentTarget as HTMLElement).style.color = '#E8D5A3' }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'rgba(232,213,163,0.75)' }}
+                    style={{ color: 'rgba(255,255,255,0.65)' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)'; (e.currentTarget as HTMLElement).style.color = '#fff' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)' }}
                   >
                     로그아웃
                   </button>
