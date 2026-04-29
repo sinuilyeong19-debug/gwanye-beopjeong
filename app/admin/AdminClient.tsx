@@ -156,7 +156,11 @@ export function AdminClient() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, id }),
     })
-    if (!res.ok) { alert('삭제 실패'); return }
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}))
+      alert(`삭제 실패: ${body.error ?? res.status}`)
+      return
+    }
     if (type === 'case') setCases(p => p.filter(c => c.id !== id))
     else setPosts(p => p.filter(c => c.id !== id))
   }
