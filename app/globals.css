@@ -21,24 +21,25 @@ body::before {
   * { box-sizing: border-box; }
 
   body {
-    background-color: #080604;
+    background-color: #0a0a0a;
     color: rgba(255,255,255,0.82);
     font-family: 'Noto Serif KR', Georgia, serif;
-    /* 대리석 결 — 매우 미세한 금빛 선 레이어 */
     background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.05) 0%, transparent 40%),
       repeating-linear-gradient(
-        94deg,
-        transparent 0px, transparent 220px,
-        rgba(201,168,76,0.022) 220px, rgba(201,168,76,0.022) 221px,
-        transparent 221px, transparent 370px,
-        rgba(232,213,163,0.014) 370px, rgba(232,213,163,0.014) 371px
+        105deg,
+        transparent,
+        transparent 50px,
+        rgba(201,168,76,0.015) 50px,
+        rgba(201,168,76,0.015) 51px
       ),
       repeating-linear-gradient(
-        138deg,
-        transparent 0px, transparent 180px,
-        rgba(255,255,255,0.011) 180px, rgba(255,255,255,0.011) 181px,
-        transparent 181px, transparent 300px,
-        rgba(201,168,76,0.016) 300px, rgba(201,168,76,0.016) 301px
+        75deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.008) 80px,
+        rgba(255,255,255,0.008) 81px
       );
   }
 
