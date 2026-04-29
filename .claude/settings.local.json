@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-192.png\")",
+      "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-512.png\")",
+      "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-512-maskable.png\")"
     ]
   }
 }
