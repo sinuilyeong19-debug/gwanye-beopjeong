@@ -33,63 +33,180 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
-      {/* Back */}
-      <Link href="/" className="text-yellow-700 hover:text-yellow-500 text-sm flex items-center gap-1">
+
+      {/* 뒤로가기 */}
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1.5 text-sm transition-colors"
+        style={{ color: 'rgba(201,168,76,0.5)' }}
+        onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLElement).style.color = '#C9A84C' }}
+        onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.5)' }}
+      >
         ← 목록으로
       </Link>
 
-      {/* Header */}
-      <div className="court-card p-6">
-        <div className="flex items-start gap-3 mb-4">
-          <span className="text-yellow-800 text-xs pt-1">{formattedDate} 접수</span>
+      {/* 사건 헤더 카드 */}
+      <div
+        className="rounded-2xl p-6"
+        style={{
+          background: 'rgba(8,6,1,0.92)',
+          border: '1px solid rgba(201,168,76,0.25)',
+          boxShadow: '0 0 0 1px rgba(201,168,76,0.06), inset 0 1px 0 rgba(232,213,163,0.07), 0 12px 40px rgba(0,0,0,0.5)',
+        }}
+      >
+        {/* 상단 골드 장식선 */}
+        <div
+          className="h-px w-full mb-5"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.4), rgba(232,213,163,0.6), rgba(201,168,76,0.4), transparent)' }}
+        />
+
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="text-xs tracking-widest uppercase"
+            style={{ color: 'rgba(201,168,76,0.4)' }}
+          >
+            {formattedDate} 접수
+          </span>
+          <span style={{ color: 'rgba(201,168,76,0.2)' }}>·</span>
+          <span
+            className="text-xs px-2 py-0.5 rounded-full font-medium"
+            style={{
+              background: 'rgba(201,168,76,0.1)',
+              border: '1px solid rgba(201,168,76,0.2)',
+              color: 'rgba(201,168,76,0.7)',
+            }}
+          >
+            {initialCounts.total}표
+          </span>
         </div>
-        <h1 className="text-2xl font-black text-yellow-200 leading-tight mb-5">
+
+        <h1
+          className="text-2xl font-black leading-tight mb-6"
+          style={{
+            fontFamily: "'Noto Serif KR', serif",
+            color: '#F0E4B8',
+          }}
+        >
           {c.title}
         </h1>
+
         <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-2 bg-red-900/20 border border-red-900/40 rounded-lg px-4 py-2">
-            <span className="text-red-700 text-xs">원고</span>
-            <span className="text-red-300 font-bold">{c.plaintiff_name}</span>
+          <div
+            className="flex items-center gap-2 rounded-xl px-4 py-2.5 flex-1 justify-center"
+            style={{
+              background: 'rgba(220,60,60,0.08)',
+              border: '1px solid rgba(220,60,60,0.25)',
+            }}
+          >
+            <span className="text-xs" style={{ color: 'rgba(220,100,100,0.6)' }}>원고</span>
+            <span className="font-bold" style={{ color: '#f09090' }}>{c.plaintiff_name}</span>
           </div>
-          <span className="text-yellow-800 font-black text-xl">VS</span>
-          <div className="flex items-center gap-2 bg-blue-900/20 border border-blue-900/40 rounded-lg px-4 py-2">
-            <span className="text-blue-700 text-xs">피고</span>
-            <span className="text-blue-300 font-bold">{c.defendant_name}</span>
+          <div
+            className="font-black text-xl select-none"
+            style={{
+              background: 'linear-gradient(135deg, #C9A84C, #E8D5A3)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            VS
+          </div>
+          <div
+            className="flex items-center gap-2 rounded-xl px-4 py-2.5 flex-1 justify-center"
+            style={{
+              background: 'rgba(60,100,220,0.08)',
+              border: '1px solid rgba(60,100,220,0.25)',
+            }}
+          >
+            <span className="text-xs" style={{ color: 'rgba(100,130,220,0.6)' }}>피고</span>
+            <span className="font-bold" style={{ color: '#90a8f0' }}>{c.defendant_name}</span>
           </div>
         </div>
+
+        <div
+          className="h-px w-full mt-5"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent)' }}
+        />
       </div>
 
-      {/* Plaintiff statement */}
-      <div className="court-card p-5">
-        <div className="section-title mb-3">
-          <span className="text-red-400">📣 원고 진술</span>
-          <span className="text-yellow-800 ml-2 normal-case font-normal text-xs tracking-normal">— {c.plaintiff_name}</span>
+      {/* 원고 진술 */}
+      <div
+        className="rounded-2xl p-5"
+        style={{
+          background: 'rgba(8,6,1,0.88)',
+          border: '1px solid rgba(201,168,76,0.18)',
+          boxShadow: 'inset 0 1px 0 rgba(232,213,163,0.05), 0 6px 24px rgba(0,0,0,0.4)',
+        }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <div
+            className="w-1 h-4 rounded-full"
+            style={{ background: 'linear-gradient(180deg, #f08080, rgba(220,60,60,0.3))' }}
+          />
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#f08080' }}>
+            원고 진술
+          </span>
+          <span className="text-xs" style={{ color: 'rgba(201,168,76,0.35)' }}>— {c.plaintiff_name}</span>
         </div>
-        <blockquote className="text-yellow-100/80 text-sm leading-relaxed whitespace-pre-wrap border-l-2 border-red-700/40 pl-4 font-serif">
+        <blockquote
+          className="text-sm leading-relaxed whitespace-pre-wrap pl-4"
+          style={{
+            color: 'rgba(240,228,184,0.75)',
+            borderLeft: '2px solid rgba(220,60,60,0.3)',
+            fontFamily: "'Noto Serif KR', serif",
+          }}
+        >
           {c.plaintiff_statement}
         </blockquote>
       </div>
 
-      {/* Defendant statement */}
+      {/* 피고 진술 */}
       {c.defendant_statement ? (
-        <div className="court-card p-5">
-          <div className="section-title mb-3">
-            <span className="text-blue-400">📣 피고 진술</span>
-            <span className="text-yellow-800 ml-2 normal-case font-normal text-xs tracking-normal">— {c.defendant_name}</span>
+        <div
+          className="rounded-2xl p-5"
+          style={{
+            background: 'rgba(8,6,1,0.88)',
+            border: '1px solid rgba(201,168,76,0.18)',
+            boxShadow: 'inset 0 1px 0 rgba(232,213,163,0.05), 0 6px 24px rgba(0,0,0,0.4)',
+          }}
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <div
+              className="w-1 h-4 rounded-full"
+              style={{ background: 'linear-gradient(180deg, #90a8f0, rgba(60,100,220,0.3))' }}
+            />
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#90a8f0' }}>
+              피고 진술
+            </span>
+            <span className="text-xs" style={{ color: 'rgba(201,168,76,0.35)' }}>— {c.defendant_name}</span>
           </div>
-          <blockquote className="text-yellow-100/80 text-sm leading-relaxed whitespace-pre-wrap border-l-2 border-blue-700/40 pl-4 font-serif">
+          <blockquote
+            className="text-sm leading-relaxed whitespace-pre-wrap pl-4"
+            style={{
+              color: 'rgba(240,228,184,0.75)',
+              borderLeft: '2px solid rgba(60,100,220,0.3)',
+              fontFamily: "'Noto Serif KR', serif",
+            }}
+          >
             {c.defendant_statement}
           </blockquote>
         </div>
       ) : (
-        <div className="court-card p-5 text-center">
-          <div className="text-yellow-800 text-sm">
+        <div
+          className="rounded-2xl p-5 text-center"
+          style={{
+            background: 'rgba(8,6,1,0.7)',
+            border: '1px solid rgba(201,168,76,0.1)',
+          }}
+        >
+          <div className="text-sm" style={{ color: 'rgba(201,168,76,0.4)' }}>
             📋 피고 측 진술이 없습니다. AI 판사는 원고 진술만으로 판단합니다.
           </div>
         </div>
       )}
 
-      {/* AI Verdict */}
+      {/* AI 판결 */}
       <AIVerdictPanel
         caseId={c.id}
         initialVerdict={c.ai_verdict}
@@ -98,7 +215,7 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
         defendantName={c.defendant_name}
       />
 
-      {/* Vote Panel */}
+      {/* 투표 패널 */}
       <VotePanel
         caseId={c.id}
         plaintiffName={c.plaintiff_name}
@@ -106,9 +223,11 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
         initialCounts={initialCounts}
       />
 
-      {/* Share */}
-      <div className="text-center py-2">
-        <p className="text-yellow-800 text-sm mb-2">이 판결을 친구에게 공유하세요</p>
+      {/* 공유 */}
+      <div className="text-center py-3">
+        <p className="text-sm mb-3" style={{ color: 'rgba(201,168,76,0.4)' }}>
+          이 판결을 친구에게 공유하세요
+        </p>
         <ShareButton />
       </div>
     </div>

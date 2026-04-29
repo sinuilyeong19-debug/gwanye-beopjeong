@@ -144,7 +144,7 @@ function StatItem({ target, label }: { target: number; label: string }) {
       </div>
       <div
         className="text-[11px] mt-2 tracking-[0.22em] uppercase"
-        style={{ color: 'rgba(255,255,255,0.28)' }}
+        style={{ color: 'rgba(201,168,76,0.4)' }}
       >
         {label}
       </div>
@@ -162,29 +162,35 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
       {/* ── 히어로 ───────────────────────────────── */}
       <section className="relative text-center pt-24 pb-20 sm:pt-32 sm:pb-28 overflow-hidden">
 
-        {/* 배경 — 매우 미세한 크림 빛 */}
+        {/* 배경 — 골드 빛 방사형 */}
         <div className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 65% 50% at 50% 0%, rgba(232,213,163,0.05) 0%, transparent 100%)' }} />
+          style={{ background: 'radial-gradient(ellipse 65% 55% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 100%)' }} />
         <div className="absolute inset-x-0 bottom-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent)' }} />
 
         {/* 법정 망치 */}
         <div className="animate-gavel animate-hero-in text-6xl sm:text-8xl mb-8 select-none">
           ⚖️
         </div>
 
-        {/* 타이틀 — 순수 흰색 */}
+        {/* 타이틀 */}
         <h1
           className="animate-hero-in text-5xl sm:text-7xl font-black tracking-tight mb-3"
-          style={{ fontFamily: "'Noto Serif KR', serif", color: '#ffffff' }}
+          style={{
+            fontFamily: "'Noto Serif KR', serif",
+            background: 'linear-gradient(160deg, #FFFFFF 0%, #F0E4B8 40%, #E8D5A3 70%, #C9A84C 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
         >
           관계법정
         </h1>
 
-        {/* 영문 서브 — 얇고 세련되게 */}
+        {/* 영문 서브 */}
         <p
           className="animate-fade-up-1 text-xs sm:text-[11px] tracking-[0.5em] uppercase mb-8"
-          style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 300, letterSpacing: '0.45em' }}
+          style={{ color: 'rgba(201,168,76,0.4)', fontWeight: 300, letterSpacing: '0.45em' }}
         >
           AI&nbsp;Judge&nbsp;&nbsp;·&nbsp;&nbsp;Jury&nbsp;Verdict&nbsp;System
         </p>
@@ -193,7 +199,7 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
         <div className="animate-fade-up-2 h-9 mb-10 flex items-center justify-center">
           <p
             className="text-lg sm:text-xl font-medium"
-            style={{ fontFamily: "'Noto Serif KR', serif", color: 'rgba(255,255,255,0.72)' }}
+            style={{ fontFamily: "'Noto Serif KR', serif", color: 'rgba(232,213,163,0.75)' }}
           >
             {typingText}
             <span className="animate-caret">|</span>
@@ -212,14 +218,14 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
 
         {/* 장식선 */}
         <div className="animate-fade-up-4 mt-16 flex items-center justify-center gap-4">
-          <div className="h-px w-14" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1))' }} />
+          <div className="h-px w-14" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.2))' }} />
           <span
             className="text-[9px] tracking-[0.45em] uppercase"
-            style={{ color: 'rgba(255,255,255,0.15)', fontWeight: 300 }}
+            style={{ color: 'rgba(201,168,76,0.25)', fontWeight: 300 }}
           >
             The Court Is In Session
           </span>
-          <div className="h-px w-14" style={{ background: 'linear-gradient(270deg, transparent, rgba(255,255,255,0.1))' }} />
+          <div className="h-px w-14" style={{ background: 'linear-gradient(270deg, transparent, rgba(201,168,76,0.2))' }} />
         </div>
       </section>
 
@@ -227,13 +233,16 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
       <FadeIn>
         <section className="relative py-10 mb-14">
           <div className="absolute inset-0"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }} />
-          <div className="relative flex items-stretch justify-center"
-            style={{ '--divide-color': 'rgba(255,255,255,0.07)' } as React.CSSProperties}>
+            style={{
+              borderTop: '1px solid rgba(201,168,76,0.12)',
+              borderBottom: '1px solid rgba(201,168,76,0.12)',
+              background: 'linear-gradient(180deg, rgba(201,168,76,0.025) 0%, transparent 50%, rgba(201,168,76,0.025) 100%)',
+            }} />
+          <div className="relative flex items-stretch justify-center">
             <StatItem target={caseCount}  label="접수된 사건" />
-            <div style={{ width: '1px', background: 'rgba(255,255,255,0.07)', margin: '4px 0' }} />
+            <div style={{ width: '1px', background: 'rgba(201,168,76,0.12)', margin: '4px 0' }} />
             <StatItem target={totalVotes} label="배심원 투표" />
-            <div style={{ width: '1px', background: 'rgba(255,255,255,0.07)', margin: '4px 0' }} />
+            <div style={{ width: '1px', background: 'rgba(201,168,76,0.12)', margin: '4px 0' }} />
             <StatItem target={aiCount}    label="AI 판결 완료" />
           </div>
         </section>
@@ -242,12 +251,16 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
       {/* ── 이용 방법 ─────────────────────────────── */}
       <FadeIn delay={60}>
         <section className="mb-16">
-          <p
-            className="text-center text-[10px] tracking-[0.4em] uppercase mb-9"
-            style={{ color: 'rgba(255,255,255,0.2)', fontWeight: 300 }}
-          >
-            How It Works
-          </p>
+          <div className="flex items-center justify-center gap-4 mb-9">
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.15))' }} />
+            <p
+              className="text-[10px] tracking-[0.4em] uppercase"
+              style={{ color: 'rgba(201,168,76,0.35)', fontWeight: 300 }}
+            >
+              How It Works
+            </p>
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(270deg, transparent, rgba(201,168,76,0.15))' }} />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               {
@@ -264,24 +277,24 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
               },
             ].map(({ icon, step, title, desc }) => (
               <div key={step} className="step-card group">
-                <div className="text-4xl mb-5 transition-transform duration-300 group-hover:scale-110">
-                  {icon}
-                </div>
                 <div
-                  className="text-[10px] font-medium tracking-[0.35em] mb-2.5"
-                  style={{ color: 'rgba(255,255,255,0.2)' }}
+                  className="text-xs font-medium tracking-[0.35em] mb-4"
+                  style={{ color: 'rgba(201,168,76,0.35)' }}
                 >
                   STEP {step}
                 </div>
+                <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">
+                  {icon}
+                </div>
                 <div
-                  className="font-semibold text-[15px] mb-3"
-                  style={{ fontFamily: "'Noto Serif KR', serif", color: 'rgba(255,255,255,0.85)' }}
+                  className="font-bold text-[15px] mb-3"
+                  style={{ fontFamily: "'Noto Serif KR', serif", color: '#E8D5A3' }}
                 >
                   {title}
                 </div>
                 <div
                   className="text-xs leading-relaxed"
-                  style={{ color: 'rgba(255,255,255,0.32)' }}
+                  style={{ color: 'rgba(201,168,76,0.4)' }}
                 >
                   {desc}
                 </div>
@@ -298,13 +311,13 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
             <div>
               <h2
                 className="text-[17px] font-bold"
-                style={{ fontFamily: "'Noto Serif KR', serif", color: 'rgba(255,255,255,0.88)' }}
+                style={{ fontFamily: "'Noto Serif KR', serif", color: '#E8D5A3' }}
               >
                 진행 중인 사건
               </h2>
               <p
                 className="text-xs mt-0.5"
-                style={{ color: 'rgba(255,255,255,0.25)' }}
+                style={{ color: 'rgba(201,168,76,0.38)' }}
               >
                 총 {caseCount.toLocaleString()}건 · 최신순
               </p>
@@ -313,16 +326,18 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
               href="/cases/new"
               className="text-xs px-4 py-2 rounded-lg transition-all duration-200"
               style={{
-                color: 'rgba(255,255,255,0.35)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                color: 'rgba(201,168,76,0.5)',
+                border: '1px solid rgba(201,168,76,0.18)',
               }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)'
-                ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.2)'
+                (e.currentTarget as HTMLElement).style.color = '#E8D5A3'
+                ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'
+                ;(e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.06)'
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.35)'
-                ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.1)'
+                (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.5)'
+                ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.18)'
+                ;(e.currentTarget as HTMLElement).style.background = 'transparent'
               }}
             >
               + 사건 접수
@@ -338,13 +353,13 @@ export function HomeClient({ cases, caseCount, totalVotes, aiCount }: Props) {
           ) : (
             <div className="case-card-glow p-16 text-center">
               <div className="text-5xl mb-4" style={{ opacity: 0.2 }}>📋</div>
-              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.3)' }}>
+              <p className="text-sm" style={{ color: 'rgba(201,168,76,0.35)' }}>
                 아직 접수된 사건이 없습니다
               </p>
               <Link
                 href="/cases/new"
                 className="inline-block mt-4 text-sm transition-colors"
-                style={{ color: 'rgba(232,213,163,0.6)' }}
+                style={{ color: 'rgba(201,168,76,0.65)' }}
               >
                 첫 사건을 접수해보세요 →
               </Link>
