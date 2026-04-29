@@ -16,13 +16,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing type or id' }, { status: 400 })
   }
 
-  const service = await createServiceClient()
+  const service = createServiceClient()
 
   if (type === 'case') {
-    const { error } = await service.from('cases').delete().eq('id', id)
+    const { error, count } = await service.from('cases').delete({ count: 'exact' }).eq('id', id)
+    console.log('[admin/delete] case', id, '→ error:', error, 'count:', count)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   } else if (type === 'post') {
-    const { error } = await service.from('posts').delete().eq('id', id)
+    const { error, count } = await service.from('posts').delete({ count: 'exact' }).eq('id', id)
+    console.log('[admin/delete] post', id, '→ error:', error, 'count:', count)
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   } else {
     return NextResponse.json({ error: 'Invalid type' }, { status: 400 })

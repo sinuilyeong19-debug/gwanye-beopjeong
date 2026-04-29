@@ -11,7 +11,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }
 
-  const service = await createServiceClient()
+  const service = createServiceClient()
   const { data, error } = await service.auth.admin.listUsers({ perPage: 1000 })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
