@@ -30,16 +30,16 @@ body::before {
       repeating-linear-gradient(
         105deg,
         transparent,
-        transparent 50px,
-        rgba(201,168,76,0.015) 50px,
-        rgba(201,168,76,0.015) 51px
+        transparent 30px,
+        rgba(201,168,76,0.06) 30px,
+        rgba(201,168,76,0.06) 31px
       ),
       repeating-linear-gradient(
         75deg,
         transparent,
-        transparent 80px,
-        rgba(255,255,255,0.008) 80px,
-        rgba(255,255,255,0.008) 81px
+        transparent 30px,
+        rgba(255,255,255,0.04) 30px,
+        rgba(255,255,255,0.04) 31px
       );
   }
 
