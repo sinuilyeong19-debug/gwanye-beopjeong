@@ -5,7 +5,8 @@
       "Bash(python *)",
       "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-192.png\")",
       "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-512.png\")",
-      "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-512-maskable.png\")"
+      "Bash(cp \"/mnt/c/Users/k/Desktop/저울사진.png\" \"/mnt/c/Users/k/gwanye-beopjeong/public/icons/icon-512-maskable.png\")",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\k\\\\gwanye-beopjeong\" -Recurse -File | Where-Object { $_.FullName -notmatch 'node_modules|\\\\.next|\\\\.git' } | Select-Object -ExpandProperty FullName | Sort-Object)"
     ]
   }
 }
